@@ -1,0 +1,39 @@
+{
+  "name": "warmindo-connect",
+  "version": "1.0.0",
+  "description": "CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.\r More information can be found at the [official site](https://codeigniter.com).",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx @tailwindcss/cli -i ./src/input.css -o ./public/css/app.css --watch",
+    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./public/css/app.css --minify",
+    "dev-react": "vite",
+    "build-react": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeigniter4/appstarter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codeigniter4/appstarter/issues"
+  },
+  "homepage": "https://github.com/codeigniter4/appstarter#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.1",
+    "@vitejs/plugin-react": "^6.0.2",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^4.3.1",
+    "vite": "^8.0.16"
+  },
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  }
+}
