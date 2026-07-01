@@ -1,158 +1,53 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .stepper-item {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        }
-        .stepper-item::before {
-            position: absolute;
-            content: "";
-            border-bottom: 2px solid #ccc;
-            width: 100%;
-            top: 15px;
-            left: -50%;
-            z-index: 2;
-        }
-        .stepper-item::after {
-            position: absolute;
-            content: "";
-            border-bottom: 2px solid #ccc;
-            width: 100%;
-            top: 15px;
-            left: 50%;
-            z-index: 2;
-        }
-        .stepper-item .step-counter {
-            position: relative;
-            z-index: 5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #ccc;
-            margin-bottom: 6px;
-        }
-        .stepper-item.active .step-counter {
-            background-color: #f59e0b; /* yellow-500 */
-            color: white;
-        }
-        .stepper-item.completed .step-counter {
-            background-color: #10b981; /* emerald-500 */
-            color: white;
-        }
-        .stepper-item.completed::after,
-        .stepper-item.completed::before {
-            border-color: #10b981;
-        }
-        .stepper-item:first-child::before {
-            content: none;
-        }
-        .stepper-item:last-child::after {
-            content: none;
-        }
-    </style>
-</head>
-<body class="bg-gray-100">
+<?= $this->extend('layouts/customer') ?>
 
-    <div class="max-w-md mx-auto bg-white min-h-screen relative shadow-lg">
+<?= $this->section('title') ?>Pesanan Diterima #<?= esc($order['id']) ?><?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+<div class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden text-center">
         <!-- Header -->
-        <div class="bg-yellow-500 text-white px-6 py-4 flex items-center justify-between">
-            <h1 class="text-xl font-bold">Status Pesanan</h1>
-            <span class="text-sm">Meja <?= esc($order['table_number']) ?></span>
+        <div class="bg-gradient-to-r from-green-500 to-green-600 px-8 py-16 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-white/10 blur-3xl rounded-full translate-y-1/2 scale-150"></div>
+            <div class="relative z-10 flex flex-col items-center">
+                <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center text-green-500 shadow-xl shadow-green-900/20 mb-6">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-black mb-2 tracking-tight">Pesanan Berhasil!</h1>
+                <p class="text-green-50 text-lg font-medium">Terima kasih telah memesan di Burjo Connect.</p>
+            </div>
         </div>
 
-        <div class="p-6">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-800">Order #<?= str_pad($order['id'], 4, '0', STR_PAD_LEFT) ?></h2>
-                <p class="text-gray-500 mt-1">Total Tagihan: <span class="font-bold text-gray-800">Rp <?= number_format($order['total_amount'], 0, ',', '.') ?></span></p>
+        <!-- Order Info -->
+        <div class="p-8 sm:p-12 relative">
+            <p class="text-gray-500 text-sm font-semibold uppercase tracking-wider mb-2">Nomor Pesanan Anda</p>
+            <div class="text-5xl sm:text-7xl font-black text-gray-900 tracking-tighter mb-8">
+                #<?= str_pad(esc($order['id']), 4, '0', STR_PAD_LEFT) ?>
+            </div>
+            
+            <div class="inline-block bg-gray-50 rounded-2xl p-6 border border-gray-100 mb-10 w-full max-w-sm">
+                <p class="text-gray-500 mb-1 text-sm">Total Tagihan</p>
+                <p class="text-3xl font-bold text-gray-900">Rp <?= number_format($order['total_amount'], 0, ',', '.') ?></p>
             </div>
 
-            <!-- Stepper -->
-            <div class="w-full flex justify-between items-center mb-10">
-                <div class="stepper-item" id="step-pending">
-                    <div class="step-counter text-sm">1</div>
-                    <div class="step-name text-xs font-medium text-gray-500">Pending</div>
+            <!-- Instructions -->
+            <div class="bg-amber-50 rounded-2xl p-6 border border-amber-100 text-left flex gap-4 max-w-xl mx-auto mb-10">
+                <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                <div class="stepper-item" id="step-cooking">
-                    <div class="step-counter text-sm">2</div>
-                    <div class="step-name text-xs font-medium text-gray-500">Cooking</div>
-                </div>
-                <div class="stepper-item" id="step-ready">
-                    <div class="step-counter text-sm">3</div>
-                    <div class="step-name text-xs font-medium text-gray-500">Ready</div>
+                <div>
+                    <h3 class="font-bold text-amber-900 mb-1 text-lg">Langkah Selanjutnya</h3>
+                    <p class="text-amber-800/80 leading-relaxed text-sm">
+                        Silakan menuju ke kasir dan tunjukkan <strong>Nomor Pesanan</strong> di atas untuk melakukan pembayaran. Pesanan Anda akan segera diproses setelah pembayaran lunas.
+                    </p>
                 </div>
             </div>
-
-            <div class="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
-                <h3 class="font-bold text-yellow-800 mb-2">Informasi Status</h3>
-                <p id="status-message" class="text-sm text-yellow-700">
-                    Memuat status terbaru...
-                </p>
-            </div>
-
-            <div class="mt-8 text-center">
-                <a href="<?= base_url('/?table=' . esc($order['table_number'])) ?>" class="text-yellow-600 hover:text-yellow-700 text-sm font-medium">
-                    &larr; Kembali ke Menu
+            
+            <div class="text-center">
+                <a href="<?= base_url('/') ?>" class="inline-flex items-center gap-2 px-8 py-4 bg-gray-900 hover:bg-gray-800 text-white text-base font-bold rounded-full transition-all active:scale-95 shadow-xl shadow-gray-900/20">
+                    Selesai & Kembali ke Menu
                 </a>
             </div>
         </div>
     </div>
-
-    <script>
-        const orderId = <?= $order['id'] ?>;
-        const initialStatus = "<?= esc($order['status']) ?>";
-
-        function updateStepper(status) {
-            const stepPending = document.getElementById('step-pending');
-            const stepCooking = document.getElementById('step-cooking');
-            const stepReady   = document.getElementById('step-ready');
-            const statusMessage = document.getElementById('status-message');
-
-            // Reset
-            stepPending.className = 'stepper-item';
-            stepCooking.className = 'stepper-item';
-            stepReady.className   = 'stepper-item';
-
-            if (status === 'pending') {
-                stepPending.classList.add('active');
-                statusMessage.innerHTML = 'Pesanan Anda sedang menunggu konfirmasi dari dapur.';
-            } else if (status === 'cooking') {
-                stepPending.classList.add('completed');
-                stepCooking.classList.add('active');
-                statusMessage.innerHTML = 'Pesanan Anda sedang dimasak. Mohon tunggu sebentar.';
-            } else if (status === 'ready' || status === 'completed') {
-                stepPending.classList.add('completed');
-                stepCooking.classList.add('completed');
-                stepReady.classList.add('completed');
-                statusMessage.innerHTML = 'Pesanan sudah siap! Silakan dinikmati.';
-            }
-        }
-
-        // Initialize with initial status
-        updateStepper(initialStatus);
-
-        // Polling every 5 seconds
-        setInterval(() => {
-            fetch('/api/track/' + orderId)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.status) {
-                        updateStepper(data.status);
-                    }
-                })
-                .catch(err => console.error('Error fetching status:', err));
-        }, 5000);
-    </script>
-</body>
-</html>
+</div>
+<?= $this->endSection() ?>

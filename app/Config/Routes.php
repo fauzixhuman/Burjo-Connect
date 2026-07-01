@@ -3,14 +3,21 @@
 use CodeIgniter\Router\RouteCollection;
 
 /** @var RouteCollection $routes */
+
+// Customer - Halaman Menu
 $routes->get('/', 'CustomerController::menu');
-$routes->get('/checkout', 'CustomerController::checkout');
 $routes->get('/track/(:num)', 'CustomerController::track/$1');
 
-// API Routes
+// Cart Routes (menggunakan library CodeIgniterCart dari GitHub)
+$routes->get('/cart', 'CartController::index');
+$routes->post('/cart/insert', 'CartController::insert');
+$routes->post('/cart/update', 'CartController::update');
+$routes->get('/cart/remove/(:any)', 'CartController::remove/$1');
+$routes->get('/cart/destroy', 'CartController::destroy');
+$routes->post('/cart/checkout', 'CartController::checkout');
+
+// API Routes (untuk tracking status pesanan)
 $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function ($routes) {
-    $routes->get('menus', 'CheckoutController::getMenus');
-    $routes->post('checkout', 'CheckoutController::processCheckout');
     $routes->get('track/(:num)', 'CheckoutController::getOrderStatus/$1');
 });
 

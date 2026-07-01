@@ -182,8 +182,8 @@ class AdminController extends BaseController
 
         $transactionModel->update($transactionId, ['status' => 'paid']);
 
-        // Update payment_status on order_items too
-        $this->orderItemModel->where('transaction_id', $transactionId)
+        // Update payment_status on order_items too based on the associated order_id
+        $this->orderItemModel->where('order_id', $trx['order_id'])
                              ->set(['payment_status' => 'paid'])
                              ->update();
 

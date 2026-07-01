@@ -61,7 +61,7 @@
                 <thead>
                     <tr class="bg-gray-50/50 text-left">
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">No. Order</th>
-                        <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Meja</th>
+                        <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Pelanggan</th>
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Total</th>
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Status</th>
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Waktu</th>
@@ -71,15 +71,14 @@
                     <?php foreach ($recentOrders as $order): ?>
                     <tr class="table-row">
                         <td class="px-8 py-5 text-sm font-bold text-gray-900">#<?= str_pad($order['id'], 4, '0', STR_PAD_LEFT) ?></td>
-                        <td class="px-8 py-5 text-sm font-medium text-gray-500">Meja <?= esc($order['table_number']) ?></td>
+                        <td class="px-8 py-5 text-sm font-medium text-gray-500">Reguler</td>
                         <td class="px-8 py-5 text-sm font-bold text-gray-900">Rp <?= number_format($order['total_amount'], 0, ',', '.') ?></td>
                         <td class="px-8 py-5">
                             <div class="flex flex-col items-start gap-1.5">
-                                <span class="status-badge status-<?= $order['status'] ?>"><?= ucfirst($order['status']) ?></span>
                                 <?php if ($order['is_lunas']): ?>
-                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded-full uppercase tracking-widest">Lunas</span>
+                                    <span class="status-badge status-ready bg-emerald-100 text-emerald-700">LUNAS</span>
                                 <?php else: ?>
-                                    <span class="text-[10px] font-bold text-red-600 bg-red-50 border border-red-100 px-2 py-0.5 rounded-full uppercase tracking-widest">Belum Lunas</span>
+                                    <span class="status-badge status-pending bg-amber-100 text-amber-700">BELUM LUNAS</span>
                                 <?php endif; ?>
                             </div>
                         </td>

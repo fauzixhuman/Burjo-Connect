@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?? 'Admin - Warmindo Connect' ?></title>
+    <title><?= $title ?? 'Admin - Burjo Connect' ?></title>
     <link rel="icon" type="image/png" href="<?= base_url('images/favicon.png') ?>">
     
     <!-- Google Fonts: Outfit -->
@@ -40,7 +40,7 @@
             <div class="py-6 flex items-center gap-4 px-8">
                 <img src="<?= base_url('images/favicon.png') ?>" alt="Logo" class="w-20 h-20 object-contain">
                 <div>
-                    <h1 class="font-bold text-gray-900 tracking-tight leading-tight">Warmindo</h1>
+                    <h1 class="font-bold text-gray-900 tracking-tight leading-tight">Burjo Connect</h1>
                     <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">Workspace</p>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                     <div class="py-6 flex items-center justify-between px-6 border-b border-gray-100">
                         <div class="flex items-center gap-4">
                             <img src="<?= base_url('images/favicon.png') ?>" alt="Logo" class="w-20 h-20 object-contain">
-                            <h1 class="font-bold text-gray-900 tracking-tight">Warmindo</h1>
+                            <h1 class="font-bold text-gray-900 tracking-tight">Burjo Connect</h1>
                         </div>
                         <button onclick="document.getElementById('mobile-sidebar').classList.add('hidden')" class="p-2 text-gray-400 hover:text-gray-600 rounded-lg bg-gray-50">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>

@@ -29,11 +29,9 @@
                 <thead>
                     <tr class="bg-gray-50/50 text-left">
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">No. Order</th>
-                        <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Meja</th>
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Waktu</th>
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Total</th>
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Status Pembayaran</th>
-                        <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest">Status Dapur</th>
                         <th class="px-8 py-4 text-[11px] font-bold text-gray-400 uppercase tracking-widest text-right">Aksi</th>
                     </tr>
                 </thead>
@@ -41,54 +39,13 @@
                     <?php foreach ($orders as $order): ?>
                     <tr class="table-row">
                         <td class="px-8 py-5 text-sm font-bold text-gray-900">#<?= str_pad($order['id'], 4, '0', STR_PAD_LEFT) ?></td>
-                        <td class="px-8 py-5 text-sm font-medium text-gray-500">Meja <?= esc($order['table_number']) ?> <?= $order['session_id'] ? ' <span class="text-xs text-gray-400">(' . $order['session_id'] . ')</span>' : '' ?></td>
                         <td class="px-8 py-5 text-sm font-medium text-gray-400"><?= date('d/m/Y H:i', strtotime($order['created_at'])) ?></td>
                         <td class="px-8 py-5 text-sm font-bold text-gray-900">Rp <?= number_format($order['total_amount'], 0, ',', '.') ?></td>
                         <td class="px-8 py-5">
                             <?php if ($order['is_lunas']): ?>
-                                <span class="status-badge status-ready">LUNAS</span>
+                                <span class="status-badge status-ready bg-green-100 text-green-700">LUNAS</span>
                             <?php else: ?>
                                 <span class="status-badge status-pending text-red-700 bg-red-100">BELUM LUNAS</span>
-                            <?php endif; ?>
-                        </td>
-                        <td class="px-8 py-5">
-                            <?php if (!$order['is_lunas']): ?>
-                                <div class="flex items-center gap-3">
-                                    <span class="status-badge status-pending">PENDING</span>
-                                    <button disabled title="Memasak" class="flex items-center justify-center p-1.5 bg-gray-100 text-gray-400 rounded-md cursor-not-allowed border border-gray-200">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    </button>
-                                </div>
-                            <?php else: ?>
-                                <div class="flex items-center gap-3">
-                                    <span class="status-badge status-<?= $order['status'] ?>"><?= strtoupper($order['status']) ?></span>
-                                    
-                                    <?php if ($order['status'] == 'pending'): ?>
-                                    <form method="post" action="<?= base_url('admin/orders/' . $order['id'] . '/status') ?>" class="inline-block">
-                                        <?= csrf_field() ?>
-                                        <input type="hidden" name="status" value="cooking">
-                                        <button type="submit" title="Mulai Memasak" class="flex items-center justify-center p-1.5 bg-blue-600 text-white hover:bg-blue-700 rounded-md transition-all shadow-sm hover:shadow-md ring-1 ring-blue-700/50">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        </button>
-                                    </form>
-                                    <?php elseif ($order['status'] == 'cooking'): ?>
-                                    <form method="post" action="<?= base_url('admin/orders/' . $order['id'] . '/status') ?>" class="inline-block">
-                                        <?= csrf_field() ?>
-                                        <input type="hidden" name="status" value="ready">
-                                        <button type="submit" title="Tandai Sudah Jadi" class="flex items-center justify-center p-1.5 bg-emerald-600 text-white hover:bg-emerald-700 rounded-md transition-all shadow-sm hover:shadow-md ring-1 ring-emerald-700/50">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                        </button>
-                                    </form>
-                                    <?php elseif ($order['status'] == 'ready'): ?>
-                                    <form method="post" action="<?= base_url('admin/orders/' . $order['id'] . '/status') ?>" class="inline-block">
-                                        <?= csrf_field() ?>
-                                        <input type="hidden" name="status" value="completed">
-                                        <button type="submit" title="Tandai Diambil" class="flex items-center justify-center p-1.5 bg-gray-800 text-white hover:bg-gray-900 rounded-md transition-all shadow-sm hover:shadow-md ring-1 ring-gray-900/50">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                        </button>
-                                    </form>
-                                    <?php endif; ?>
-                                </div>
                             <?php endif; ?>
                         </td>
                         <td class="px-8 py-5 text-right">
@@ -161,7 +118,7 @@ function showOrderDetail(orderId) {
         .then(data => {
             modalTitle.textContent = 'Grup Pesanan #' + String(data.order.id).padStart(4, '0');
             let html = '<div class="space-y-3">';
-            html += '<div class="flex justify-between text-sm"><span class="text-gray-500">Meja / Sesi</span><span class="font-semibold">' + data.order.table_number + (data.order.session_id ? ' (' + data.order.session_id + ')' : '') + '</span></div>';
+            html += '<div class="flex justify-between text-sm"><span class="text-gray-500">Pelanggan</span><span class="font-semibold">Reguler</span></div>';
             html += '<div class="flex justify-between text-sm"><span class="text-gray-500">Total Akumulasi</span><span class="font-semibold">Rp ' + Number(data.order.total_amount).toLocaleString('id-ID') + '</span></div>';
             html += '<div class="flex justify-between text-sm"><span class="text-gray-500">Status Dapur</span><span class="status-badge status-' + data.order.status + '">' + data.order.status.charAt(0).toUpperCase() + data.order.status.slice(1) + '</span></div>';
             html += '<hr class="my-4">';

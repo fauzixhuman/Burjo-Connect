@@ -3,10 +3,12 @@
 namespace App\Controllers;
 
 use App\Models\OrderModel;
-use App\Models\OrderItemModel;
 
 class CustomerController extends BaseController
 {
+    /**
+     * Halaman menu utama Burjo Connect
+     */
     public function menu()
     {
         $menuModel = new \App\Models\MenuModel();
@@ -15,23 +17,23 @@ class CustomerController extends BaseController
                            ->join('categories', 'categories.id = menus.category_id')
                            ->findAll();
 
+        // Ambil data cart dari library GitHub
+        $cart = \Config\Services::cart();
+
         $data = [
-            'title' => 'Menu - Warmindo Connect',
-            'table' => isset($_GET['table']) ? $_GET['table'] : '1',
-            'menus' => $menus
+            'title'         => 'Menu - Burjo Connect',
+            'pageTitle'     => 'Katalog Menu',
+            'activePage'    => 'menu',
+            'menus'         => $menus,
+            'cartItemCount' => $cart->totalItems(),
+            'cartTotal'     => $cart->total(),
         ];
         return view('customer/menu', $data);
     }
 
-    public function checkout()
-    {
-        $data = [
-            'title' => 'Checkout & Split Bill',
-            'table' => isset($_GET['table']) ? $_GET['table'] : '1'
-        ];
-        return view('customer/checkout', $data);
-    }
-
+    /**
+     * Halaman lacak pesanan
+     */
     public function track($orderId)
     {
         $orderModel = new OrderModel();
@@ -42,8 +44,10 @@ class CustomerController extends BaseController
         }
 
         $data = [
-            'title' => 'Lacak Pesanan #' . str_pad($orderId, 4, '0', STR_PAD_LEFT),
-            'order' => $order
+            'title'      => 'Lacak Pesanan #' . str_pad($orderId, 4, '0', STR_PAD_LEFT),
+            'pageTitle'  => 'Lacak Pesanan',
+            'activePage' => 'track',
+            'order'      => $order
         ];
 
         return view('customer/track', $data);

@@ -33,7 +33,7 @@
         .footer { text-align: center; font-size: 11px; margin-top: 10px; }
         
         @media print {
-            .no-print { display: none; }
+            .no-print, button { display: none !important; }
         }
         
         .print-btn {
@@ -56,7 +56,7 @@
     <button class="print-btn no-print" onclick="window.close()" style="background:#f3f4f6; margin-bottom:20px;">TUTUP</button>
 
     <div class="header">
-        <h1>WARMINDO CONNECT</h1>
+        <h1>BURJO CONNECT</h1>
         <p>Jl. Contoh Jalan No. 123</p>
         <p>Telp: 081234567890</p>
     </div>
