@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2026 at 02:41 AM
+-- Generation Time: Jul 01, 2026 at 05:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,17 +53,18 @@ CREATE TABLE `categories` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Makanan', '2026-06-16 08:16:09', '2026-06-16 08:16:09'),
-(2, 'Minuman', '2026-06-16 08:16:09', '2026-06-16 08:16:09'),
-(3, 'Cemilan', '2026-06-16 08:16:09', '2026-06-16 08:16:09');
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Makanan', '2026-06-16 08:16:09', '2026-06-16 08:16:09', NULL),
+(2, 'Minuman', '2026-06-16 08:16:09', '2026-06-16 08:16:09', NULL),
+(3, 'Cemilan', '2026-06-16 08:16:09', '2026-06-16 08:16:09', NULL);
 
 -- --------------------------------------------------------
 
@@ -80,17 +81,18 @@ CREATE TABLE `menus` (
   `image_path` varchar(255) DEFAULT NULL,
   `is_available` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `menus`
 --
 
-INSERT INTO `menus` (`id`, `category_id`, `name`, `description`, `price`, `image_path`, `is_available`, `created_at`, `updated_at`) VALUES
-(10, 2, 'Nutrisasi', 'minuman segar cocok untuk panas2 an', 5000.00, '1781618899_1f4cd922c781f1474aff.jpg', 1, '2026-06-16 14:08:19', '2026-06-16 14:08:19'),
-(11, 1, 'Nasi Goreng', 'nasi goreng telur dengan ciri khas jawa dimasak dengan arang', 15000.00, '1781618948_f013e6dd9b3822f0a377.jpg', 1, '2026-06-16 14:09:08', '2026-06-16 14:09:08'),
-(12, 3, 'Omelet', 'kelezatan makanan luar negeri', 10000.00, '1781618984_65dee5bfd803c87435e8.jpg', 1, '2026-06-16 14:09:44', '2026-06-16 14:09:44');
+INSERT INTO `menus` (`id`, `category_id`, `name`, `description`, `price`, `image_path`, `is_available`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 2, 'Nutrisasi', 'minuman segar cocok untuk panas2 an', 5000.00, '1781618899_1f4cd922c781f1474aff.jpg', 1, '2026-06-16 14:08:19', '2026-06-16 14:08:19', NULL),
+(2, 1, 'Nasi Goreng', 'nasi goreng telur dengan ciri khas jawa dimasak dengan arang', 15000.00, '1781618948_f013e6dd9b3822f0a377.jpg', 1, '2026-06-16 14:09:08', '2026-06-16 14:09:08', NULL),
+(3, 3, 'Omelet', 'kelezatan makanan luar negeri', 10000.00, '1781618984_65dee5bfd803c87435e8.jpg', 1, '2026-06-16 14:09:44', '2026-06-16 14:09:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -118,7 +120,8 @@ INSERT INTO `migrations` (`id`, `version`, `class`, `group`, `namespace`, `time`
 (3, '2026-06-16-081231', 'App\\Database\\Migrations\\Orders', 'default', 'App', 1781597789, 2),
 (4, '2026-06-16-081232', 'App\\Database\\Migrations\\OrderItems', 'default', 'App', 1781597789, 2),
 (5, '2026-06-16-090401', 'App\\Database\\Migrations\\CreateAdminsTable', 'default', 'App', 1781600730, 3),
-(6, '2026-06-16-092019', 'App\\Database\\Migrations\\AddSessionIdToOrders', 'default', 'App', 1781601644, 4);
+(6, '2026-06-16-092019', 'App\\Database\\Migrations\\AddSessionIdToOrders', 'default', 'App', 1781601644, 4),
+(7, '2026-06-30-000000', 'App\\Database\\Migrations\\AddDeletedAtToTables', 'default', 'App', 1782776690, 5);
 
 -- --------------------------------------------------------
 
@@ -141,7 +144,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `session_id`, `table_number`, `status`, `total_amount`, `created_at`, `updated_at`) VALUES
-(1, '1wltr0eq', '1', 'pending', 15000.00, '2026-06-17 00:38:26', '2026-06-17 00:38:26');
+(1, NULL, '1', 'pending', 20000.00, '2026-07-01 15:41:28', '2026-07-01 15:41:28'),
+(2, NULL, '1', 'pending', 10000.00, '2026-07-01 15:44:33', '2026-07-01 15:44:33');
 
 -- --------------------------------------------------------
 
@@ -166,7 +170,9 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `transaction_id`, `menu_id`, `qty`, `price_at_order`, `payment_status`, `created_at`, `updated_at`) VALUES
-(127, 1, 1, 11, 1, 15000.00, 'paid', '2026-06-17 00:38:26', '2026-06-17 00:38:26');
+(1, 1, NULL, 2, 1, 15000.00, 'paid', '2026-07-01 15:41:28', '2026-07-01 15:41:43'),
+(2, 1, NULL, 1, 1, 5000.00, 'paid', '2026-07-01 15:41:28', '2026-07-01 15:41:43'),
+(3, 2, 2, 3, 1, 10000.00, 'paid', '2026-07-01 15:44:33', '2026-07-01 15:44:42');
 
 -- --------------------------------------------------------
 
@@ -190,7 +196,8 @@ CREATE TABLE `transactions` (
 --
 
 INSERT INTO `transactions` (`id`, `order_id`, `payment_method`, `payment_mode`, `amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'qris', 'single', 15000.00, 'paid', '2026-06-17 00:38:26', '2026-06-17 00:38:26');
+(1, 1, 'cash', 'single', 20000.00, 'paid', '2026-07-01 15:41:28', '2026-07-01 15:41:43'),
+(2, 2, 'cash', 'single', 10000.00, 'paid', '2026-07-01 15:44:33', '2026-07-01 15:44:42');
 
 --
 -- Indexes for dumped tables
@@ -270,25 +277,25 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
