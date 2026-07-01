@@ -26,6 +26,9 @@ $routes->get('admin/login', 'AuthController::login');
 $routes->post('admin/process-login', 'AuthController::processLogin');
 $routes->get('admin/logout', 'AuthController::logout');
 
+// PDF Export Route
+$routes->get('export-pdf', 'PdfController::exportMenu');
+
 // Admin Protected Routes
 $routes->group('admin', ['filter' => 'auth'], static function ($routes) {
     $routes->get('/', 'AdminController::dashboard');
