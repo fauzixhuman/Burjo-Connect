@@ -95,9 +95,37 @@
 
 <?= $this->section('scripts') ?>
 <script>
-    // Auto Update Dashboard setiap 10 detik
+    // Auto Update Dashboard setiap 30 detik (tanpa full reload agar tidak menyebabkan redirect loop)
     setInterval(() => {
-        window.location.reload();
-    }, 10000);
+        fetch(window.location.href, { redirect: 'manual' })
+            .then(response => {
+                // Jika terjadi redirect (session expired), hentikan refresh
+                if (response.type === 'opaqueredirect' || response.redirected) {
+                    window.location.href = '<?= base_url('admin/login') ?>';
+                    return null;
+                }
+                return response.text();
+            })
+            .then(html => {
+                if (!html) return;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // Update stat cards
+                const newStats = doc.querySelectorAll('.stat-card');
+                const oldStats = document.querySelectorAll('.stat-card');
+                newStats.forEach((card, i) => {
+                    if (oldStats[i]) oldStats[i].innerHTML = card.innerHTML;
+                });
+
+                // Update orders table
+                const newTable = doc.querySelector('.bg-white.rounded-lg.border');
+                const oldTable = document.querySelector('.bg-white.rounded-lg.border');
+                if (newTable && oldTable) {
+                    oldTable.innerHTML = newTable.innerHTML;
+                }
+            })
+            .catch(err => console.error('Auto-refresh error:', err));
+    }, 30000);
 </script>
 <?= $this->endSection() ?>

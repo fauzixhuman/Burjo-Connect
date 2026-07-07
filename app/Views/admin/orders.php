@@ -81,12 +81,19 @@
 <script>
 let isModalOpen = false;
 
-// Auto Refresh table every 10 seconds smoothly if modal is closed
+// Auto Refresh table every 30 seconds smoothly if modal is closed
 setInterval(() => {
     if (!isModalOpen) {
-        fetch(window.location.href)
-            .then(response => response.text())
+        fetch(window.location.href, { redirect: 'manual' })
+            .then(response => {
+                if (response.type === 'opaqueredirect' || response.redirected) {
+                    window.location.href = '<?= base_url('admin/login') ?>';
+                    return null;
+                }
+                return response.text();
+            })
             .then(html => {
+                if (!html) return;
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 
@@ -102,7 +109,7 @@ setInterval(() => {
             })
             .catch(error => console.error('Auto-refresh error:', error));
     }
-}, 10000);
+}, 30000);
 
 function showOrderDetail(orderId) {
     isModalOpen = true;
@@ -113,7 +120,7 @@ function showOrderDetail(orderId) {
     modal.classList.remove('hidden');
     modalBody.innerHTML = '<p class="text-sm text-gray-500 text-center py-8">Memuat detail...</p>';
 
-    fetch('/admin/orders/' + orderId + '/detail')
+    fetch('<?= base_url('admin/orders/') ?>' + orderId + '/detail')
         .then(res => res.json())
         .then(data => {
             modalTitle.textContent = 'Grup Pesanan #' + String(data.order.id).padStart(4, '0');
@@ -180,11 +187,11 @@ function showOrderDetail(orderId) {
                 
                 html += '  <div class="mt-6 pt-5 border-t border-gray-200/50 flex gap-2">';
                 if (hasUnpaid && unpaidTrxId) {
-                    html += '  <form method="post" action="/admin/transactions/' + unpaidTrxId + '/mark-paid" class="flex-1">';
+                    html += '  <form method="post" action="<?= base_url('admin/transactions/') ?>' + unpaidTrxId + '/mark-paid" class="flex-1">';
                     html += '    <button type="submit" class="w-full flex items-center justify-center gap-2 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold rounded-xl transition-colors shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Tandai Lunas</button>';
                     html += '  </form>';
                 }
-                html += '    <a href="/admin/orders/' + data.order.id + '/print" target="_blank" class="flex items-center justify-center gap-2 py-2.5 px-4 bg-gray-900 hover:bg-gray-800 text-white text-sm font-bold rounded-xl transition-colors shadow-sm ' + (hasUnpaid ? 'flex-none' : 'w-full flex-1') + '"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>Cetak Struk</a>';
+                html += '    <a href="<?= base_url('admin/orders/') ?>' + data.order.id + '/print" target="_blank" class="flex items-center justify-center gap-2 py-2.5 px-4 bg-gray-900 hover:bg-gray-800 text-white text-sm font-bold rounded-xl transition-colors shadow-sm ' + (hasUnpaid ? 'flex-none' : 'w-full flex-1') + '"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>Cetak Struk</a>';
                 html += '  </div>';
 
                 html += '</div>';

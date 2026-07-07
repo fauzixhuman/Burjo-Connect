@@ -131,7 +131,7 @@ if (!empty($menus)) {
 
                     <div class="mt-auto pt-4 border-t border-gray-100">
                         <?php if (!empty($menu['is_available'])): ?>
-                            <form action="/cart/insert" method="post" class="w-full">
+                            <form action="<?= base_url('cart/insert') ?>" method="post" class="w-full">
                                 <?= csrf_field() ?>
                                 <input type="hidden" name="id" value="<?= esc($menu['id']) ?>">
                                 <input type="hidden" name="product_id" value="<?= esc($menu['id']) ?>">

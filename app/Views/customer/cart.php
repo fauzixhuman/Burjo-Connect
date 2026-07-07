@@ -71,7 +71,7 @@
                                     <div class="flex items-center justify-between mt-6">
                                         <!-- Quantity Controls -->
                                         <div class="flex items-center gap-4 bg-gray-50/50 rounded-full p-1 border border-gray-100">
-                                            <form action="/cart/update" method="POST" class="m-0">
+                                            <form action="<?= base_url('cart/update') ?>" method="POST" class="m-0">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="rowid" value="<?= esc($item['rowid']) ?>">
                                                 <input type="hidden" name="qty" value="<?= max(0, $item['qty'] - 1) ?>">
@@ -82,7 +82,7 @@
                                             
                                             <span class="w-6 text-center font-bold text-gray-900 text-sm"><?= esc($item['qty']) ?></span>
                                             
-                                            <form action="/cart/update" method="POST" class="m-0">
+                                            <form action="<?= base_url('cart/update') ?>" method="POST" class="m-0">
                                                 <?= csrf_field() ?>
                                                 <input type="hidden" name="rowid" value="<?= esc($item['rowid']) ?>">
                                                 <input type="hidden" name="qty" value="<?= $item['qty'] + 1 ?>">
@@ -92,7 +92,7 @@
                                             </form>
                                         </div>
 
-                                        <form action="/cart/remove/<?= esc($item['rowid']) ?>" method="POST" class="m-0">
+                                        <form action="<?= base_url('cart/remove/' . esc($item['rowid'])) ?>" method="POST" class="m-0">
                                             <?= csrf_field() ?>
                                             <button type="submit" class="text-sm font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 transition-colors px-4 py-2 rounded-full">
                                                 Hapus
@@ -126,7 +126,7 @@
                         </div>
                     </dl>
 
-                    <form action="/cart/checkout" method="POST" class="mt-8">
+                    <form action="<?= base_url('cart/checkout') ?>" method="POST" class="mt-8">
                         <?= csrf_field() ?>
                         <input type="hidden" name="payment_method" value="cash">
                         <button type="submit" class="w-full flex items-center justify-center gap-2 px-6 py-4 text-base font-bold rounded-2xl text-white bg-gray-900 hover:bg-gray-800 transition-all hover:-translate-y-0.5 shadow-xl shadow-gray-900/20">

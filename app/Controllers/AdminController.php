@@ -84,7 +84,7 @@ class AdminController extends BaseController
     {
         $order = $this->orderModel->find($id);
         if (!$order) {
-            return redirect()->to('/admin/orders')->with('error', 'Pesanan tidak ditemukan.');
+            return redirect()->to(base_url('admin/orders'))->with('error', 'Pesanan tidak ditemukan.');
         }
 
         $transactionModel = new \App\Models\TransactionModel();
@@ -115,7 +115,7 @@ class AdminController extends BaseController
     {
         $order = $this->orderModel->find($id);
         if (!$order) {
-            return redirect()->to('/admin/orders')->with('error', 'Pesanan tidak ditemukan.');
+            return redirect()->to(base_url('admin/orders'))->with('error', 'Pesanan tidak ditemukan.');
         }
 
         $transactionModel = new \App\Models\TransactionModel();
@@ -168,7 +168,7 @@ class AdminController extends BaseController
         }
 
         $this->orderModel->update($id, ['status' => $status]);
-        return redirect()->to('/admin/orders')->with('success', 'Status pesanan berhasil diperbarui.');
+        return redirect()->to(base_url('admin/orders'))->with('success', 'Status pesanan berhasil diperbarui.');
     }
 
     public function markTransactionPaid($transactionId)
@@ -187,7 +187,7 @@ class AdminController extends BaseController
                              ->set(['payment_status' => 'paid'])
                              ->update();
 
-        return redirect()->to('/admin/orders')->with('success', 'Transaksi berhasil ditandai Lunas.');
+        return redirect()->to(base_url('admin/orders'))->with('success', 'Transaksi berhasil ditandai Lunas.');
     }
 
     // ─── Menu Management ─────────────────────────────────────────────
@@ -227,7 +227,7 @@ class AdminController extends BaseController
 
         $this->menuModel->insert($data);
 
-        return redirect()->to('/admin/menus')->with('success', 'Menu baru berhasil ditambahkan!');
+        return redirect()->to(base_url('admin/menus'))->with('success', 'Menu baru berhasil ditambahkan!');
     }
 
     public function updateMenu($id)
@@ -259,7 +259,7 @@ class AdminController extends BaseController
 
         $this->menuModel->update($id, $data);
 
-        return redirect()->to('/admin/menus')->with('success', 'Menu berhasil diperbarui!');
+        return redirect()->to(base_url('admin/menus'))->with('success', 'Menu berhasil diperbarui!');
     }
 
     public function deleteMenu($id)
@@ -274,6 +274,6 @@ class AdminController extends BaseController
         }
 
         $this->menuModel->delete($id);
-        return redirect()->to('/admin/menus')->with('success', 'Menu berhasil dihapus!');
+        return redirect()->to(base_url('admin/menus'))->with('success', 'Menu berhasil dihapus!');
     }
 }

@@ -10,7 +10,7 @@ class AuthController extends BaseController
     {
         // Jika sudah login, redirect ke dashboard admin
         if (session()->get('isLoggedIn')) {
-            return redirect()->to('/admin');
+            return redirect()->to(base_url('admin'));
         }
 
         $data = [
@@ -39,14 +39,14 @@ class AuthController extends BaseController
                     'isLoggedIn' => true,
                 ];
                 $session->set($ses_data);
-                return redirect()->to('/admin');
+                return redirect()->to(base_url('admin'));
             } else {
                 $session->setFlashdata('error', 'Password salah.');
-                return redirect()->to('/admin/login');
+                return redirect()->to(base_url('admin/login'));
             }
         } else {
             $session->setFlashdata('error', 'Username tidak ditemukan.');
-            return redirect()->to('/admin/login');
+            return redirect()->to(base_url('admin/login'));
         }
     }
 
@@ -54,6 +54,6 @@ class AuthController extends BaseController
     {
         $session = session();
         $session->destroy();
-        return redirect()->to('/admin/login');
+        return redirect()->to(base_url('admin/login'));
     }
 }

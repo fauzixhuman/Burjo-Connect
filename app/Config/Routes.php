@@ -12,7 +12,7 @@ $routes->get('/track/(:num)', 'CustomerController::track/$1');
 $routes->get('/cart', 'CartController::index');
 $routes->post('/cart/insert', 'CartController::insert');
 $routes->post('/cart/update', 'CartController::update');
-$routes->get('/cart/remove/(:any)', 'CartController::remove/$1');
+$routes->post('/cart/remove/(:any)', 'CartController::remove/$1');
 $routes->get('/cart/destroy', 'CartController::destroy');
 $routes->post('/cart/checkout', 'CartController::checkout');
 

@@ -92,7 +92,7 @@ class CartController extends BaseController
             session()->setFlashdata('error', 'Gagal menambahkan produk ke keranjang.');
         }
 
-        return redirect()->to('/');
+        return redirect()->to(base_url('/'));
     }
 
     // -----------------------------------------------------------------------
@@ -126,7 +126,7 @@ class CartController extends BaseController
             session()->setFlashdata('error', 'Gagal memperbarui keranjang.');
         }
 
-        return redirect()->to('/cart');
+        return redirect()->to(base_url('cart'));
     }
 
     // -----------------------------------------------------------------------
@@ -145,7 +145,7 @@ class CartController extends BaseController
 
         session()->setFlashdata('success', 'Item berhasil dihapus dari keranjang.');
 
-        return redirect()->to('/cart');
+        return redirect()->to(base_url('cart'));
     }
 
     // -----------------------------------------------------------------------
@@ -164,7 +164,7 @@ class CartController extends BaseController
 
         session()->setFlashdata('success', 'Keranjang berhasil dikosongkan.');
 
-        return redirect()->to('/');
+        return redirect()->to(base_url('/'));
     }
 
     // -----------------------------------------------------------------------
@@ -196,7 +196,7 @@ class CartController extends BaseController
         // Validasi keranjang tidak kosong
         if (empty($cartItems)) {
             session()->setFlashdata('error', 'Keranjang belanja kosong. Silakan tambahkan produk terlebih dahulu.');
-            return redirect()->to('/');
+            return redirect()->to(base_url('/'));
         }
 
         // Ambil metode pembayaran dari form POST (default: cash)
@@ -249,7 +249,7 @@ class CartController extends BaseController
         // Periksa apakah transaksi database berhasil
         if ($db->transStatus() === false) {
             session()->setFlashdata('error', 'Terjadi kesalahan saat memproses pesanan. Silakan coba lagi.');
-            return redirect()->to('/cart');
+            return redirect()->to(base_url('cart'));
         }
 
         // Kosongkan keranjang setelah checkout berhasil
@@ -257,6 +257,6 @@ class CartController extends BaseController
 
         session()->setFlashdata('success', 'Pesanan berhasil dibuat! Silakan tunggu pesanan Anda diproses.');
 
-        return redirect()->to('/track/' . $orderId);
+        return redirect()->to(base_url('track/' . $orderId));
     }
 }
